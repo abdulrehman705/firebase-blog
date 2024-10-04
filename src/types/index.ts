@@ -17,6 +17,8 @@ export interface BlogPost {
   image?: string;
   time: string;
   totalReadTime?: string;
+  useProfilePicture?:string;
+  user_id?:number
 }
 
 export interface PayloadData {

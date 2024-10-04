@@ -1,32 +1,38 @@
 import { getBlog } from "@/actions";
-import Image from "next/image";
 import User from "@/assets/icons/user.svg";
 import Header from "@/components/header";
 import Link from "next/link";
+import DeleteButton from "@/components/deleteButton";
 
 const Blogs = async () => {
   const posts = await getBlog();
-
   return (
     <>
       <Header />
       {posts?.map((post) => (
-        <Link href={`/blog/${post.id}`} key={post.id}>
-          <div
+        <div
             key={post.id}
             className="max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden my-10"
           >
+              <div className="relative">
+               <div className="absolute  right-6 w-26 bg-gray-400 rounded-lg shadow-lg">
+                 <DeleteButton post={post}/>
+               </div>
+           </div>
+        <Link href={`/blog/${post.id}`} key={post.id}>
             <div className="p-6">
               <div className="flex items-center mb-4">
-                <Image
-                  src={User}
+                <img
+                  src={post?.useProfilePicture ? post?.useProfilePicture : User}
                   alt="user"
                   className="h-6 w-6 text-gray-400 mr-2"
                 />
                 <span className="text-sm text-gray-600 font-medium">
                   {post.userName}
                 </span>
+                
               </div>
+            
               <div className="flex justify-between items-start">
                 <div className="flex-1 pr-4">
                   <h2 className="text-xl font-bold text-gray-900 mb-2">
@@ -61,8 +67,8 @@ const Blogs = async () => {
                 )}
               </div>
             </div>
-          </div>
         </Link>
+          </div>
       ))}
     </>
   );
