@@ -1,10 +1,11 @@
 "use client";
-import { signInWithPopup, googleProvider } from "@/lib/firebase";
+import { signInWithPopup, googleProvider } from "@/utils/firebase";
 import { AuthProvider, getAuth } from "firebase/auth";
 import Image from "next/image";
 import { useState } from "react";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { useRouter } from "next/navigation";
+import token from "@/utils/token";
 
 interface SocialSignInButtonProps {
   icon: string | StaticImport;
@@ -26,6 +27,7 @@ const SocialSignInButton: React.FC<SocialSignInButtonProps> = ({
     signInWithPopup(auth, provider)
       .then((result: any) => {
         console.log("result", result);
+        token(result?.user?.accessToken);
         router.push("/");
       })
       .catch((error: any) => {

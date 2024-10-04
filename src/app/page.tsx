@@ -1,13 +1,12 @@
 "use client";
-import { db } from "@/lib/firebase";
+import { db } from "@/utils/firebase";
 import { addDoc, collection } from "firebase/firestore";
 
 // export async function getServerSideProps() {
 //   const posts = await ok();
 //   return { props: { posts } };
 // }
-
-export const Blog = ({ posts }: any) => {
+const Blog = ({ posts }: any) => {
   return (
     <div className="container mx-auto">
       <h1>Blog Posts</h1>
@@ -38,3 +37,5 @@ const ok = async () => {
     born: 1815,
   });
 };
+
+export default Blog;
