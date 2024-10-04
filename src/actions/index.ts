@@ -1,6 +1,6 @@
 import { BlogPost } from "@/types";
 import { db } from "@/utils/firebase";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 
 export const getBlog = async () => {
   try {
