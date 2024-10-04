@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { useRouter } from "next/navigation";
-import token from "@/utils/token";
+import {setAccessToken,setUserDetails} from "@/utils/token";
 
 interface SocialSignInButtonProps {
   icon: string | StaticImport;
@@ -26,8 +26,14 @@ const SocialSignInButton: React.FC<SocialSignInButtonProps> = ({
     setLoading(true);
     signInWithPopup(auth, provider)
       .then((result: any) => {
-        console.log("result", result);
-        token(result?.user?.accessToken);
+        console.log("result",JSON.stringify(result?.user?.accessToken));
+        setAccessToken(result?.user?.accessToken);
+        setUserDetails({
+          uid: result?.user?.uid,
+          displayName: result?.user?.displayName,
+          email: result?.user?.email,
+          photoURL: result?.user?.photoURL
+        });
         router.push("/");
       })
       .catch((error: any) => {
