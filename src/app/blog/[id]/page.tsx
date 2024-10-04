@@ -1,28 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import { BlogPost } from "@/types";
 
-interface BlogPost {
-  id: string;
-  userName: string;
-  title: string;
-  description: string;
-  image?: string;
-  time: string;
-  totalReadTime?: string;
-}
-
-const BlogDetails = () => {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+const BlogDetails = (params: { id: any }) => {
+  const { id: BlogId } = params;
   const [post, setPost] = useState<BlogPost | null>(null);
 
   useEffect(() => {
     const fetchPost = async () => {
-      if (id) {
-        const postRef = doc(db, "Blog", id as string);
+      if (BlogId) {
+        const postRef = doc(db, "Blog", BlogId);
         const postSnapshot = await getDoc(postRef);
 
         if (postSnapshot.exists()) {
@@ -34,7 +23,7 @@ const BlogDetails = () => {
     };
 
     fetchPost();
-  }, [id]);
+  }, [BlogId]);
 
   if (!post) {
     return <div>Loading...</div>;

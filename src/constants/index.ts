@@ -1,13 +1,5 @@
-interface ConfigType {
-  firebase: {
-    apiKey: string;
-    authDomain: string;
-    projectId: string;
-    storageBucket: string;
-    messagingSenderId: string;
-    appId: string;
-  };
-}
+import { ConfigType } from "@/types";
+
 export const Config: ConfigType = {
   firebase: {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
