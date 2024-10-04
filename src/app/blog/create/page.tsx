@@ -5,10 +5,12 @@ import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
 import { PayloadData } from "@/types";
+import { getUserDetails } from "@/utils/functions";
 
 const Blog = () => {
+  const userDetail = getUserDetails()
   const [formData, setFormData] = useState<PayloadData>({
-    userName: "",
+    // userName: "",
     title: "",
     description: "",
     image: null,
@@ -62,7 +64,9 @@ const Blog = () => {
       }
 
       await addDoc(collection(db, "Blog"), {
-        userName: formData.userName,
+        user_id:userDetail?.uid,
+        userName: userDetail?.displayName,
+        useProfilePicture:userDetail?.photoURL,
         title: formData.title,
         description: formData.description,
         time: new Date().toISOString(),
@@ -73,7 +77,6 @@ const Blog = () => {
       });
 
       setFormData({
-        userName: "",
         title: "",
         description: "",
         image: null,
@@ -96,17 +99,6 @@ const Blog = () => {
       <h1>Blog Posts</h1>
 
       <form onSubmit={handleSubmit} className="my-4">
-        <div>
-          <label>User Name:</label>
-          <input
-            type="text"
-            name="userName"
-            value={formData.userName}
-            onChange={handleInputChange}
-            required
-            className="border p-2 my-2 w-full"
-          />
-        </div>
         <div>
           <label>Title:</label>
           <input
