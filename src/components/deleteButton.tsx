@@ -2,7 +2,7 @@
 import { getBlog } from "@/actions";
 import { db } from "@/utils/firebase";
 import { getUserDetails } from "@/utils/functions";
-import { collection, deleteDoc, doc,getDocs } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 
 const DeleteButton = (post:any) => {
     const userDetail= getUserDetails()
